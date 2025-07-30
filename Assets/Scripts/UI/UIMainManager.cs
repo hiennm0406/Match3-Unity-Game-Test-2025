@@ -18,6 +18,10 @@ public class UIMainManager : MonoBehaviour
 
     void Start()
     {
+        // Có thể cache hoặc dùng trực tiếp.
+        // Cache nếu dùng nhiều và tránh phải sửa code
+        m_gameManager = GameManager.Instance;
+
         for (int i = 0; i < m_menuList.Length; i++)
         {
             m_menuList[i].Setup(this);

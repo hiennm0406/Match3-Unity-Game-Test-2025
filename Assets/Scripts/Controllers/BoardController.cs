@@ -31,9 +31,10 @@ public class BoardController : MonoBehaviour
 
     private bool m_gameOver;
 
-    public void StartGame(GameManager gameManager, GameSettings gameSettings)
+    public void StartGame(GameSettings gameSettings)
     {
-        m_gameManager = gameManager;
+        // Cache
+        m_gameManager = GameManager.Instance;
 
         m_gameSettings = gameSettings;
 

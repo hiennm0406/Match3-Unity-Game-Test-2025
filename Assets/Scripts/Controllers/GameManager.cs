@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public event Action<eStateGame> StateChangedAction = delegate { };
 
+    public static GameManager Instance;
     public enum eLevelMode
     {
         TIMER,
@@ -47,12 +48,22 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // Dùng singleton để tránh việc phải setup quá nhiều
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         State = eStateGame.SETUP;
 
         m_gameSettings = Resources.Load<GameSettings>(Constants.GAME_SETTINGS_PATH);
 
-        m_uiMenu = FindObjectOfType<UIMainManager>();
-        m_uiMenu.Setup(this);
+        // sử dụng singleton để bỏ bước tìm 
+        //m_uiMenu = FindObjectOfType<UIMainManager>();
+        //m_uiMenu.Setup(this);
     }
 
     void Start()
@@ -84,7 +95,7 @@ public class GameManager : MonoBehaviour
     public void LoadLevel(eLevelMode mode)
     {
         m_boardController = new GameObject("BoardController").AddComponent<BoardController>();
-        m_boardController.StartGame(this, m_gameSettings);
+        m_boardController.StartGame(m_gameSettings);
 
         if (mode == eLevelMode.MOVES)
         {
@@ -94,7 +105,8 @@ public class GameManager : MonoBehaviour
         else if (mode == eLevelMode.TIMER)
         {
             m_levelCondition = this.gameObject.AddComponent<LevelTime>();
-            m_levelCondition.Setup(m_gameSettings.LevelMoves, m_uiMenu.GetLevelConditionView(), this);
+            // bỏ biến khi dùng singleton
+            m_levelCondition.Setup(m_gameSettings.LevelMoves, m_uiMenu.GetLevelConditionView());
         }
 
         m_levelCondition.ConditionCompleteEvent += GameOver;
@@ -131,9 +143,15 @@ public class GameManager : MonoBehaviour
         if (m_levelCondition != null)
         {
             m_levelCondition.ConditionCompleteEvent -= GameOver;
-
+            
             Destroy(m_levelCondition);
             m_levelCondition = null;
         }
+    }
+
+    void OnDestroy()
+    {
+        // Giải phóng bộ nhớ
+        if (Instance == this) Instance = null;
     }
 }
