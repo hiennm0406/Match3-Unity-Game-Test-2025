@@ -51,6 +51,10 @@ public class GameManager : MonoBehaviour
     private DataSetting m_dataSetting;
     public DataSetting DataSetting => m_dataSetting;
 
+
+    public List<int> ItemCount;
+
+
     private void Awake()
     {
         // Dùng singleton để tránh việc phải setup quá nhiều
@@ -99,6 +103,12 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(eLevelMode mode)
     {
+        ItemCount = new();
+        int count = Enum.GetNames(typeof(NormalItem.eNormalType)).Length;
+        for (int i = 0; i < count; i++)
+        {
+            ItemCount.Add(0);
+        }
         m_boardController = new GameObject("BoardController").AddComponent<BoardController>();
         m_boardController.StartGame();
         if (mode == eLevelMode.MOVES)
@@ -121,6 +131,12 @@ public class GameManager : MonoBehaviour
     public void ResetLevel()
     {
         if (m_levelCondition == null) return;
+        ItemCount = new();
+        int count = Enum.GetNames(typeof(NormalItem.eNormalType)).Length;
+        for (int i = 0; i < count; i++)
+        {
+            ItemCount.Add(0);
+        }
         m_levelCondition.ResetLevel();
         m_boardController.ResetLevel();
     }

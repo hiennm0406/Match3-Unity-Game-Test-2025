@@ -31,6 +31,7 @@ public class BoardController : MonoBehaviour
 
     private bool m_gameOver;
 
+
     public void StartGame()
     {
         // Cache
@@ -41,7 +42,7 @@ public class BoardController : MonoBehaviour
         m_gameManager.StateChangedAction += OnGameStateChange;
 
         m_cam = Camera.main;
-
+        
         m_board = new Board(this.transform, m_gameSettings);
 
         Fill();

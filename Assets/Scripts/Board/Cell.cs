@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.Networking.UnityWebRequest;
 
 public class Cell : MonoBehaviour
 {
@@ -41,6 +42,11 @@ public class Cell : MonoBehaviour
     public void Assign(Item item)
     {
         Item = item;
+        if (Item is NormalItem normalItem)
+        {
+           int result = (int)normalItem.ItemType;
+            GameManager.Instance.ItemCount[result]++;
+        }
         Item.SetCell(this);
     }
 
@@ -72,6 +78,11 @@ public class Cell : MonoBehaviour
     {
         if (Item == null) return;
 
+        if (Item is NormalItem normalItem)
+        {
+            int result = (int)normalItem.ItemType;
+            GameManager.Instance.ItemCount[result]--;
+        }
         Item.ExplodeView();
         Item = null;
     }
