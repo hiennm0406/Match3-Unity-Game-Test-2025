@@ -90,4 +90,9 @@ public class Cell : MonoBehaviour
     {
         Item.AnimationMoveToPosition();
     }
+
+    private void OnDestroy()
+    {
+        Clear();
+    }
 }

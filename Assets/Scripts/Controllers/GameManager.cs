@@ -37,14 +37,19 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private GameSettings m_gameSettings;
-
 
     private BoardController m_boardController;
 
     private UIMainManager m_uiMenu;
 
     private LevelCondition m_levelCondition;
+
+    private GameSettings m_gameSettings;
+    public GameSettings GameSetting => m_gameSettings;
+
+
+    private DataSetting m_dataSetting;
+    public DataSetting DataSetting => m_dataSetting;
 
     private void Awake()
     {
@@ -60,9 +65,9 @@ public class GameManager : MonoBehaviour
         State = eStateGame.SETUP;
 
         m_gameSettings = Resources.Load<GameSettings>(Constants.GAME_SETTINGS_PATH);
-
-        // sử dụng singleton để bỏ bước tìm 
-        //m_uiMenu = FindObjectOfType<UIMainManager>();
+        m_dataSetting =  Resources.Load<DataSetting>(Constants.DATA_SETTING_PATH);
+        m_uiMenu = FindObjectOfType<UIMainManager>();
+        // sử dụng singleton
         //m_uiMenu.Setup(this);
     }
 
@@ -95,8 +100,7 @@ public class GameManager : MonoBehaviour
     public void LoadLevel(eLevelMode mode)
     {
         m_boardController = new GameObject("BoardController").AddComponent<BoardController>();
-        m_boardController.StartGame(m_gameSettings);
-
+        m_boardController.StartGame();
         if (mode == eLevelMode.MOVES)
         {
             m_levelCondition = this.gameObject.AddComponent<LevelMoves>();

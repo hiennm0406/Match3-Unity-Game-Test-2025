@@ -31,18 +31,18 @@ public class BoardController : MonoBehaviour
 
     private bool m_gameOver;
 
-    public void StartGame(GameSettings gameSettings)
+    public void StartGame()
     {
         // Cache
         m_gameManager = GameManager.Instance;
 
-        m_gameSettings = gameSettings;
+        m_gameSettings = m_gameManager.GameSetting;
 
         m_gameManager.StateChangedAction += OnGameStateChange;
 
         m_cam = Camera.main;
 
-        m_board = new Board(this.transform, gameSettings);
+        m_board = new Board(this.transform, m_gameSettings);
 
         Fill();
     }

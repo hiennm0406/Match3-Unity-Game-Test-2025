@@ -10,23 +10,12 @@ public class Item
     public Cell Cell { get; private set; }
 
     public Transform View { get; private set; }
-
+    protected SpriteRenderer ViewSr; 
 
     public virtual void SetView()
     {
-        string prefabname = GetPrefabName();
-
-        if (!string.IsNullOrEmpty(prefabname))
-        {
-            GameObject prefab = Resources.Load<GameObject>(prefabname);
-            if (prefab)
-            {
-                View = GameObject.Instantiate(prefab).transform;
-            }
-        }
+        View = ViewSr.transform;
     }
-
-    protected virtual string GetPrefabName() { return string.Empty; }
 
     public virtual void SetCell(Cell cell)
     {
@@ -132,7 +121,7 @@ public class Item
 
         if (View)
         {
-            GameObject.Destroy(View.gameObject);
+            Pooling.Instance.PushItem(ViewSr);
             View = null;
         }
     }

@@ -7,38 +7,22 @@ public class BonusItem : Item
 {
     public enum eBonusType
     {
-        NONE,
         HORIZONTAL,
         VERTICAL,
         ALL
     }
 
     public eBonusType ItemType;
-
+    public override void SetView()
+    {
+        GameManager m_gmr = GameManager.Instance;
+        ViewSr = Pooling.Instance.PullItem();
+        ViewSr.sprite = m_gmr.DataSetting.SpecialTypes[(int)ItemType];
+        base.SetView();
+    }
     public void SetType(eBonusType type)
     {
         ItemType = type;
-    }
-
-    protected override string GetPrefabName()
-    {
-        string prefabname = string.Empty;
-        switch (ItemType)
-        {
-            case eBonusType.NONE:
-                break;
-            case eBonusType.HORIZONTAL:
-                prefabname = Constants.PREFAB_BONUS_HORIZONTAL;
-                break;
-            case eBonusType.VERTICAL:
-                prefabname = Constants.PREFAB_BONUS_VERTICAL;
-                break;
-            case eBonusType.ALL:
-                prefabname = Constants.PREFAB_BONUS_BOMB;
-                break;
-        }
-
-        return prefabname;
     }
 
     internal override bool IsSameType(Item other)

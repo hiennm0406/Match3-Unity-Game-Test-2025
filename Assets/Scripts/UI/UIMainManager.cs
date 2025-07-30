@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening.Core.Easing;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ public class UIMainManager : MonoBehaviour
         // Có thể cache hoặc dùng trực tiếp.
         // Cache nếu dùng nhiều và tránh phải sửa code
         m_gameManager = GameManager.Instance;
+        m_gameManager.StateChangedAction += OnGameStateChange;
 
         for (int i = 0; i < m_menuList.Length; i++)
         {
@@ -47,12 +49,6 @@ public class UIMainManager : MonoBehaviour
                 m_gameManager.SetState(GameManager.eStateGame.GAME_STARTED);
             }
         }
-    }
-
-    internal void Setup(GameManager gameManager)
-    {
-        m_gameManager = gameManager;
-        m_gameManager.StateChangedAction += OnGameStateChange;
     }
 
     private void OnGameStateChange(GameManager.eStateGame state)
