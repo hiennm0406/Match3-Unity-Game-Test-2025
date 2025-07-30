@@ -16,5 +16,6 @@ public class GameSettings : ScriptableObject
 
     public float TimeForHint = 5f;
 
+    // Value reskin
     public int ItemSkin = 2;
 }

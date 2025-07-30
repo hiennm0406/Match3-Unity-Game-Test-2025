@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LevelTime : LevelCondition
 {
     private float m_time;
+    private float m_timeTmp;
 
     private GameManager m_mngr;
 
@@ -17,9 +18,16 @@ public class LevelTime : LevelCondition
         m_mngr = GameManager.Instance;
 
         m_time = value;
+        m_timeTmp = value;
 
         UpdateText();
     }
+    public override void ResetLevel()
+    {
+        m_time = m_timeTmp;
+        UpdateText();
+    }
+
 
     private void Update()
     {

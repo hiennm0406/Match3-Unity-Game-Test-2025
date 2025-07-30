@@ -118,6 +118,13 @@ public class GameManager : MonoBehaviour
         State = eStateGame.GAME_STARTED;
     }
 
+    public void ResetLevel()
+    {
+        if (m_levelCondition == null) return;
+        m_levelCondition.ResetLevel();
+        m_boardController.ResetLevel();
+    }
+
     public void GameOver()
     {
         StartCoroutine(WaitBoardController());

@@ -47,6 +47,13 @@ public class BoardController : MonoBehaviour
         Fill();
     }
 
+    public void ResetLevel()
+    {
+        StopHints();
+        m_board.ResetBoard();
+        FindMatchesAndCollapse();
+    }
+
     private void Fill()
     {
         m_board.Fill();

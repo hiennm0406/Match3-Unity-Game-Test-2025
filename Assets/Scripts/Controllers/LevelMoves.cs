@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LevelMoves : LevelCondition
 {
     private int m_moves;
+    private int m_moveTmp;
 
     private BoardController m_board;
 
@@ -15,11 +16,18 @@ public class LevelMoves : LevelCondition
         base.Setup(value, txt);
 
         m_moves = (int)value;
+        m_moveTmp = (int)value;
 
         m_board = board;
 
         m_board.OnMoveEvent += OnMove;
 
+        UpdateText();
+    }
+
+    public override void ResetLevel()
+    {
+        m_moves = m_moveTmp;
         UpdateText();
     }
 

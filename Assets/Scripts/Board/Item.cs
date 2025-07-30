@@ -121,6 +121,7 @@ public class Item
 
         if (View)
         {
+            if(Pooling.Instance != null)
             Pooling.Instance.PushItem(ViewSr);
             View = null;
         }
